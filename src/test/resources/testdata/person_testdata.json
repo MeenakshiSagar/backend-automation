@@ -1,0 +1,19 @@
+{
+  "validPersons": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com"
+    }
+  ],
+  "invalidPersons": [
+    {
+      "firstName": "J",
+      "expectedError": "firstName.minLength"
+    },
+    {
+      "email": "invalid-email",
+      "expectedError": "email.invalid"
+    }
+  ]
+}
