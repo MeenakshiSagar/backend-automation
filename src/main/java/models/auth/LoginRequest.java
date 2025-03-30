@@ -63,4 +63,7 @@ public class LoginRequest {
     public void setWebLogin(boolean webLogin) {
         this.webLogin = webLogin;
     }
+    public void getSomething(){
+        System.out.println("Something went wrong");
+    }
 }
