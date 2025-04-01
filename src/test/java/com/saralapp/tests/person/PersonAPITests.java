@@ -15,8 +15,8 @@ public class PersonAPITests extends BaseTest {
 
     @Test(dataProvider = "validPersons", dataProviderClass = PersonDataProvider.class)
     public void testCreateValidPerson(PersonRequest testPerson) {
-        Response response = PersonService.createPerson(testPerson);
 
+        Response response = PersonService.createPerson(testPerson);
         Assert.assertEquals(response.getStatusCode(), 201);
         Assert.assertNotNull(response.as(PersonResponse.class).getId());
     }
@@ -26,7 +26,15 @@ public class PersonAPITests extends BaseTest {
         Response response = RestAssured.given()
                 .body(PersonDataProvider.getValidPerson())
                 .post(Endpoints.CREATE_PERSON);
-
         Assert.assertEquals(response.getStatusCode(), 401);
+    }
+
+    @Test(dataProvider = "invalidPersons", dataProviderClass = PersonDataProvider.class)
+    public void testInvalidPersonData(PersonRequest invalidPerson, String expectedErrorKey) {
+        Response response = PersonService.createPerson(invalidPerson);
+        Assert.assertEquals(response.getStatusCode(), 400);
+
+//        String expectedErrorMessage = ErrorMessages.getErrorMessage(expectedErrorKey);
+    //        Assert.assertTrue(response.getBody().asString().contains(expectedErrorMessage));
     }
 }

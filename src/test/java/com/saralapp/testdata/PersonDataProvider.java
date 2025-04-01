@@ -2,15 +2,18 @@ package com.saralapp.testdata;
 
 import models.person.PersonRequest;
 import org.testng.annotations.DataProvider;
+import utils.FakerDataGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonDataProvider {
 
     public static PersonRequest getValidPerson() {
         PersonRequest person = new PersonRequest();
-        person.setFirstName("John");
-        person.setLastName("Doe");
-        person.setEmail("john.doe@example.com");
-        person.setPhone("1234567890");
+        person.setName(FakerDataGenerator.getValidName());
+        person.setRelationName(FakerDataGenerator.getValidName());
+        person.setPhoneNumber("8989891111");
         return person;
     }
 
@@ -21,18 +24,18 @@ public class PersonDataProvider {
         };
     }
 
-//    // Optional: Data provider for invalid persons
-//    @DataProvider(name = "invalidPersons")
-//    public static Object[][] invalidPersons() {
-//        PersonRequest invalidPerson = new PersonRequest();
-//        // Missing or invalid fields for testing purposes
-//        invalidPerson.setFirstName(\"\"); // empty first name
-//                invalidPerson.setLastName(\"\");  // empty last name
-//                        invalidPerson.setEmail(\"invalid-email\"); // invalid email format
-//                                invalidPerson.setPhone(\"\");     // empty phone
-//
-//        return new Object[][] {
-//                { invalidPerson }
-//        };
-//    }
+
+    @DataProvider(name = "fieldSpecificTests")
+    public static Object[][] fieldSpecificTests() {
+        List<Object[]> testCases = new ArrayList<>();
+
+        // Add test cases for different invalid field scenarios
+        testCases.add(new Object[]{FakerDataGenerator.getInvalidPerson("firstName", ""), "person.firstName.required"});
+        testCases.add(new Object[]{FakerDataGenerator.getInvalidPerson("firstName", "J"), "person.firstName.minLength"});
+        testCases.add(new Object[]{FakerDataGenerator.getInvalidPerson("email", "invalid-email"), "person.email.invalid"});
+        testCases.add(new Object[]{FakerDataGenerator.getInvalidPerson("phoneNumber", "123"), "person.phoneNumber.invalid"});
+
+        return testCases.toArray(new Object[0][2]);
+    }
+
 }

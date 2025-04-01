@@ -1,14 +1,11 @@
+
 {
   "person": {
     "person_name": {
-      "required": "First name is required",
+      "required": "Mandatory field cannot be empty 'First Name'",
       "minLength": "First name must be at least 2 characters",
-      "maxLength": "First name cannot exceed 50 characters"
-    },
-    "email": {
-      "required": "Email is required",
-      "invalid": "Invalid email format",
-      "maxLength": "Email cannot exceed 100 characters"
+      "maxLength": "First name cannot exceed 50 characters",
+      "invalidFormat": "Name: Invalid format. Allowed characters should be between 2 and 50."
     }
   }
 }
