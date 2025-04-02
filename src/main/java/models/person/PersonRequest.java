@@ -1,6 +1,7 @@
 package models.person;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,16 +12,31 @@ import lombok.Setter;
 public class PersonRequest {
 
     //Mandatory form fields
+    @JsonProperty("level_name")
     private Object levelName;
+
+    @JsonProperty("level")
     private Object level;
+
+    @JsonProperty("type")
     private Object dataType;
+
+    @JsonProperty("unit")
     private Object dataUnit;
+
+    @JsonProperty("sub_unit")
     private Object subUnit;
 
+    @JsonProperty("name")
     private String name;
     private String relationName;
+
+    @JsonProperty("phone_no")
     private String phoneNumber;
+
+    @JsonProperty("designation")
     private int designation;
+
     private String primaryMemberID;
     private String age;
     private String mobilesRelationName;
@@ -34,7 +50,10 @@ public class PersonRequest {
     private String whatsappNumber;
     private String stdCode;
     private String landlineNumber;
+
+    @JsonProperty("category")
     private String category;
+
     private String caste;
     private String email;
     private String dob;
@@ -48,7 +67,10 @@ public class PersonRequest {
     private String profession;
     private String bike;
     private String car;
+
+    @JsonProperty("assembly_constituency")
     private String assemblyConstituency;
+
     private String booth;
     private String voterID;
     private String pannaNumber;

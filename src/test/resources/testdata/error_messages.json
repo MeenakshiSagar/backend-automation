@@ -1,11 +1,10 @@
-
 {
   "person": {
     "person_name": {
-      "required": "Mandatory field cannot be empty 'First Name'",
-      "minLength": "First name must be at least 2 characters",
-      "maxLength": "First name cannot exceed 50 characters",
-      "invalidFormat": "Name: Invalid format. Allowed characters should be between 2 and 50."
+      "required": "Mandatory fields can not be empty: Name",
+      "minLength": "{{NAME_INVALID_FORMAT}}",
+      "maxLength": "{{NAME_INVALID_FORMAT}}",
+      "invalidFormat": "{{NAME_INVALID_FORMAT}}"
     }
   }
 }

@@ -3,6 +3,7 @@ package com.saralapp.testdata;
 import models.person.PersonRequest;
 import org.testng.annotations.DataProvider;
 import utils.FakerDataGenerator;
+import utils.FormFilterData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,20 @@ public class PersonDataProvider {
 
     public static PersonRequest getValidPerson() {
         PersonRequest person = new PersonRequest();
+
+        // Mandatory Form Fields (Taken from a Constants File)
+        person.setLevelName(FormFilterData.LEVEL_NAME);
+        person.setLevel(FormFilterData.LEVEL);
+        person.setDataType(FormFilterData.DATA_TYPE);
+        person.setDataUnit(FormFilterData.DATA_UNIT);
+        person.setSubUnit(FormFilterData.SUB_UNIT);
+        person.setDesignation(FormFilterData.DESIGNATION);
+
+        //Form Fields
         person.setName(FakerDataGenerator.getValidName());
-        person.setRelationName(FakerDataGenerator.getValidName());
-        person.setPhoneNumber("8989891111");
+        person.setPhoneNumber(FakerDataGenerator.getValidPhoneNumber());
+        person.setCategory("2");
+        person.setAssemblyConstituency("363");
         return person;
     }
 
