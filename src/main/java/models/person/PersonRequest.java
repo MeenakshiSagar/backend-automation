@@ -69,7 +69,7 @@ public class PersonRequest {
     private String car;
 
     @JsonProperty("assembly_constituency")
-    private String assemblyConstituency;
+    private int assemblyConstituency;
 
     private String booth;
     private String voterID;

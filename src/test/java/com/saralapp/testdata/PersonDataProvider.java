@@ -8,6 +8,8 @@ import utils.FormFilterData;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.saralapp.helpers.StringHelper.repeat;
+
 public class PersonDataProvider {
 
     public static PersonRequest getValidPerson() {
@@ -25,7 +27,7 @@ public class PersonDataProvider {
         person.setName(FakerDataGenerator.getValidName());
         person.setPhoneNumber(FakerDataGenerator.getValidPhoneNumber());
         person.setCategory("2");
-        person.setAssemblyConstituency("363");
+        person.setAssemblyConstituency(363);
         return person;
     }
 
@@ -36,6 +38,17 @@ public class PersonDataProvider {
         };
     }
 
+    // ------------------ Name Field Test Cases ------------------
+    @DataProvider(name = "nameTestCases")
+    public Object[][] nameTestCases() {
+        return new Object[][]{
+                {"", "person.person_name.required"}, // Empty name
+                {"J", "person.person_name.minLength"}, // Single character
+                {repeat("A", 51), "person.person_name.maxLength"}, // More than 50 characters
+                {"John_Doe!", "person.person_name.invalidFormat"}, // Invalid characters
+                {FakerDataGenerator.getValidName(), null}  // Valid name
+        };
+    }
 
     @DataProvider(name = "fieldSpecificTests")
     public static Object[][] fieldSpecificTests() {

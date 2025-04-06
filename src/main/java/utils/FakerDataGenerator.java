@@ -4,7 +4,7 @@ import com.github.javafaker.Faker;
 import models.person.PersonRequest;
 
 public class FakerDataGenerator {
-    private static int phoneCounter = 1000000000;
+    private static long phoneCounter = 8000111190L;
 
     private static final Faker faker = new Faker();
 
@@ -94,6 +94,8 @@ public class FakerDataGenerator {
         person.setRelationName(faker.name().lastName());
         person.setEmail(faker.internet().emailAddress());
         person.setPhoneNumber(String.valueOf(phoneCounter++)); // Increment phone number
+        person.setCategory("5");
+        person.setAssemblyConstituency(363);
         return person;
     }
 
@@ -101,7 +103,7 @@ public class FakerDataGenerator {
         PersonRequest person = getValidPerson(); // Start with a valid person
 
         switch (field) {
-            case "firstName":
+            case "name":
                 person.setName(invalidValue);
                 break;
             case "email":

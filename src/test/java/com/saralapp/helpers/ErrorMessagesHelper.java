@@ -6,8 +6,8 @@ public class ErrorMessagesHelper {
     private static final JSONObject errorMessages;
 
     static {
-        // Adjust the path as needed
-        errorMessages = JsonHelper.readJsonFile("src/test/resources/error_messages.json");
+        errorMessages = JsonHelper.readJsonFile("src/test/resources/testdata/error_messages.json");
+
     }
 
     /**
@@ -18,6 +18,7 @@ public class ErrorMessagesHelper {
      * @return the error message string with placeholders replaced
      */
     public static String getErrorMessage(String key) {
+        System.out.println("JSON Object of error messages: " + errorMessages);
         String[] keys = key.split("\\.");
         JSONObject current = errorMessages;
         for (int i = 0; i < keys.length; i++) {
@@ -39,5 +40,4 @@ public class ErrorMessagesHelper {
         }
         return "";
     }
-
 }
