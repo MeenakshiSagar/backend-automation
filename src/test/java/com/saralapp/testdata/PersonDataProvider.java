@@ -1,10 +1,10 @@
 package com.saralapp.testdata;
 
+import enums.TestCaseType;
 import models.person.PersonRequest;
 import org.testng.annotations.DataProvider;
 import utils.FakerDataGenerator;
 import utils.FormFilterData;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class PersonDataProvider {
         person.setDesignation(FormFilterData.DESIGNATION);
 
         //Form Fields
-        person.setName(FakerDataGenerator.getValidName());
+        person.setName(FakerDataGenerator.generateName(TestCaseType.VALID));
         person.setPhoneNumber(FakerDataGenerator.getValidPhoneNumber());
         person.setCategory("2");
         person.setAssemblyConstituency(363);
@@ -42,11 +42,11 @@ public class PersonDataProvider {
     @DataProvider(name = "nameTestCases")
     public Object[][] nameTestCases() {
         return new Object[][]{
-                {"", "person.person_name.required"}, // Empty name
-                {"J", "person.person_name.minLength"}, // Single character
-                {repeat("A", 51), "person.person_name.maxLength"}, // More than 50 characters
-                {"John_Doe!", "person.person_name.invalidFormat"}, // Invalid characters
-                {FakerDataGenerator.getValidName(), null}  // Valid name
+                {FakerDataGenerator.generateName(TestCaseType.EMPTY), "person.person_name.required"}, // Empty name
+                {FakerDataGenerator.generateName(TestCaseType.MIN_LENGTH), "person.person_name.minLength"}, // Single character
+                {FakerDataGenerator.generateName(TestCaseType.MAX_LENGTH), "person.person_name.maxLength"}, // More than 50 characters
+                {FakerDataGenerator.generateName(TestCaseType.INVALID_FORMAT ), "person.person_name.invalidFormat"}, // Invalid characters
+                {FakerDataGenerator.generateName(TestCaseType.VALID), null}  // Valid name
         };
     }
 

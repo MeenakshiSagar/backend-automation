@@ -1,31 +1,24 @@
 package utils;
 
 import com.github.javafaker.Faker;
+import enums.TestCaseType;
 import models.person.PersonRequest;
+
 
 public class FakerDataGenerator {
     private static long phoneCounter = 8000111190L;
 
     private static final Faker faker = new Faker();
 
-    // Generates a valid first name (2 to 50 characters)
-    public static String getValidName() {
-        return faker.name().firstName();
-    }
-
-    // Generates an invalid first name (single character)
-    public static String getShortFirstName() {
-        return faker.lorem().characters(1);
-    }
-
-    // Generates an invalid first name (more than 50 characters)
-    public static String getLongFirstName() {
-        return faker.lorem().characters(51);
-    }
-
-    // Generates a valid last name
-    public static String getValidLastName() {
-        return faker.name().lastName();
+    //generate names for different combinations
+    public static String generateName(TestCaseType type) {
+        return switch (type) {
+            case EMPTY -> "";
+            case MIN_LENGTH -> faker.lorem().characters(1);
+            case MAX_LENGTH -> faker.lorem().characters(51);
+            case VALID -> faker.name().firstName();
+            case INVALID_FORMAT -> faker.name().firstName() + faker.number().digits(2);
+        };
     }
 
     // Generates a valid email
