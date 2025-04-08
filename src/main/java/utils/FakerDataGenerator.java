@@ -88,7 +88,7 @@ public class FakerDataGenerator {
         person.setEmail(faker.internet().emailAddress());
         person.setPhoneNumber(String.valueOf(phoneCounter++)); // Increment phone number
         person.setCategory("5");
-        person.setAssemblyConstituency(363);
+        person.setAssemblyConstituency(236);
         return person;
     }
 
@@ -99,6 +99,14 @@ public class FakerDataGenerator {
             case "name":
                 person.setName(invalidValue);
                 break;
+            case "relationName":
+                person.setRelationName(invalidValue);
+                break;
+            case "designation":
+                person.setDesignation(invalidValue);
+                break;
+            case "smartphone":
+                person.setSmartphone(invalidValue);
             case "email":
                 person.setEmail(invalidValue);
                 break;

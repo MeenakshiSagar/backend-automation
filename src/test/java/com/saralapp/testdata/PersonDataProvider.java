@@ -50,6 +50,18 @@ public class PersonDataProvider {
         };
     }
 
+    // ------------------ Relation Field Test Cases ------------------
+    @DataProvider(name = "relationNameTestCases")
+    public Object[][] relationNameTestCases() {
+        return new Object[][]{
+                {FakerDataGenerator.generateName(TestCaseType.EMPTY), "person.person_name.required"}, // Empty name
+                {FakerDataGenerator.generateName(TestCaseType.MIN_LENGTH), "person.person_name.minLength"}, // Single character
+                {FakerDataGenerator.generateName(TestCaseType.MAX_LENGTH), "person.person_name.maxLength"}, // More than 50 characters
+                {FakerDataGenerator.generateName(TestCaseType.INVALID_FORMAT ), "person.person_name.invalidFormat"}, // Invalid characters
+                {FakerDataGenerator.generateName(TestCaseType.VALID), null}  // Valid name
+        };
+    }
+
     @DataProvider(name = "fieldSpecificTests")
     public static Object[][] fieldSpecificTests() {
         List<Object[]> testCases = new ArrayList<>();

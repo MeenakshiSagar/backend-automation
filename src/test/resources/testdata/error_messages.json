@@ -5,6 +5,12 @@
       "minLength": "{{NAME_INVALID_FORMAT}}",
       "maxLength": "{{NAME_INVALID_FORMAT}}",
       "invalidFormat": "{{NAME_INVALID_FORMAT}}"
+    },
+    "person_relation_name": {
+      "required": "Mandatory fields can not be empty: Relation Name",
+      "minLength": "{{RELATION_NAME_INVALID_FORMAT}}",
+      "maxLength": "{{RELATION_NAME_INVALID_FORMAT}}",
+      "invalidFormat": "{{RELATION_NAME_INVALID_FORMAT}}"
     }
   }
 }
