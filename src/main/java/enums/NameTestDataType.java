@@ -1,9 +1,9 @@
 package enums;
 
-public enum TestCaseType {
+public enum NameTestDataType {
     EMPTY,
     MIN_LENGTH,
     MAX_LENGTH,
+    INVALID_FORMAT,
     VALID,
-    INVALID_FORMAT
 }

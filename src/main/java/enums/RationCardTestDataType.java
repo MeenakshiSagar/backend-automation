@@ -1,0 +1,13 @@
+package enums;
+
+public enum RationCardTestDataType {
+
+    EMPTY,
+    LESS_THAN_MIN_LENGTH,
+    MORE_THAN_MAX_LENGTH,
+    BETWEEN_MIN_AND_MAX_LENGTH,
+    EXACTLY_MIN_LENGTH,
+    EXACTLY_MAX_LENGTH,
+    INTEGER_FORMAT,
+    STRING_ALPHANUMERIC
+}

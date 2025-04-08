@@ -1,0 +1,17 @@
+package enums;
+
+public enum EmailTestDataType {
+
+    EMPTY,
+    INVALID_FORMAT,
+    VALID,
+    UPPERCASE_EMAIL,
+    MISSING_AT_SYMBOL,
+    MISSING_DOMAIN,
+    MISSING_USERNAME,
+    SPECIAL_CHARACTERS,
+    MULTIPLE_AT_SYMBOLS,
+    TRAILING_DOT,
+    LEADING_DOT,
+    SPACE_IN_EMAIL
+}

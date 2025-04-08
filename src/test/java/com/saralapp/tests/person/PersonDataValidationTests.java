@@ -46,4 +46,19 @@ public class PersonDataValidationTests extends BaseTest {
                     "Expected error message: " + expectedError);
         }
     }
+
+    @Test(dataProvider = "rationCardTestCases", dataProviderClass = PersonDataProvider.class)
+    public void testRationCardValidation(String testName, String expectedErrorKey) {
+        PersonRequest person = FakerDataGenerator.getInvalidPerson("rationCard", testName);
+        Response response = PersonService.createPerson(person);
+
+        if (expectedErrorKey == null) {
+            Assert.assertEquals(response.getStatusCode(), 201, "Expected valid Ration Card Number to be accepted.");
+        } else {
+            Assert.assertEquals(response.getStatusCode(), 400, "Expected invalid Ration Card Number to be rejected.");
+            String expectedErrorMessage = ErrorMessagesHelper.getErrorMessage("person." + expectedErrorKey);
+            Assert.assertTrue(response.getBody().asString().contains(expectedErrorMessage),
+                    "Expected error message: " + expectedErrorMessage);
+        }
+    }
 }
