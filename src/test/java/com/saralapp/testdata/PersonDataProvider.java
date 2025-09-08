@@ -49,6 +49,20 @@ public class PersonDataProvider {
         };
     }
 
+    @DataProvider(name = "phoneNumberTestCases")
+    public static Object[][] phoneNumberTestCases() {
+        return new Object[][]{
+                {FakerDataGenerator.generatePhone(PhoneNumberTestDataType.EMPTY), "person.phone_number.required"},
+                {PhoneNumberTestDataType.MIN_LENGTH, "person.phone_number.minLength"},
+                {PhoneNumberTestDataType.MAX_LENGTH, "person.phone_number.maxLength"},
+                {PhoneNumberTestDataType.STARTING_FROM_2_TO_4, "person.phone_number.invalidFormat"},
+                {PhoneNumberTestDataType.INTEGER_FORMAT, null},
+                {PhoneNumberTestDataType.STRING_FORMAT, null},
+                {PhoneNumberTestDataType.INVALID_FORMAT, "person.phone_number.invalidFormat"},
+                {PhoneNumberTestDataType.VALID, null}
+        };
+    }
+
     // ------------------ Relation Field Test Cases ------------------
     @DataProvider(name = "relationNameTestCases")
     public Object[][] relationNameTestCases() {

@@ -2,6 +2,7 @@ package com.saralapp.tests.person;
 
 import com.saralapp.helpers.ErrorMessagesHelper;
 import com.saralapp.tests.BaseTest;
+import enums.PhoneNumberTestDataType;
 import io.restassured.response.Response;
 import models.person.PersonRequest;
 import org.testng.Assert;
@@ -44,6 +45,23 @@ public class PersonDataValidationTests extends BaseTest {
             String expectedError = ErrorMessagesHelper.getErrorMessage(expectedErrorKey);
             assertTrue(response.getBody().asString().contains(expectedError),
                     "Expected error message: " + expectedError);
+        }
+    }
+
+    @Test(dataProvider = "phoneNumberTestCases", dataProviderClass = PersonDataProvider.class)
+    public void testPhoneNumberValidation(String phoneTestName, String expectedErrorKey) {
+        PersonRequest person = FakerDataGenerator.getInvalidPerson("phoneNumber", phoneTestName);
+
+        Response response = PersonService.createPerson(person);
+
+        if (expectedErrorKey == null) {
+            Assert.assertEquals(response.getStatusCode(), 201, "Expected valid phone number to be accepted.");
+        } else {
+            Assert.assertEquals(response.getStatusCode(), 400, "Expected invalid phone number to be rejected.");
+            String expectedError = ErrorMessagesHelper.getErrorMessage(expectedErrorKey);
+            assertTrue(response.getBody().asString().contains(expectedError),
+                    "Expected error message: " + expectedError +
+                            " | Actual response: " + response.getBody().asString());
         }
     }
 

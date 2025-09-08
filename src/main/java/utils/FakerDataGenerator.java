@@ -6,8 +6,10 @@ import models.person.PersonRequest;
 
 import java.time.LocalDate;
 
-public class FakerDataGenerator {
-    private static long phoneCounter = 8000111190L;
+public class
+
+FakerDataGenerator {
+    private static long phoneCounter = 6555555551L;
 
     private static final Faker faker = new Faker();
 
@@ -168,11 +170,11 @@ public class FakerDataGenerator {
 
         //Form Fields
         person.setName(faker.name().firstName());
-        person.setRelationName(faker.name().lastName());
-        person.setEmail(faker.internet().emailAddress());
+//        person.setRelationName(faker.name().lastName());
+//        person.setEmail(faker.internet().emailAddress());
         person.setPhoneNumber(String.valueOf(phoneCounter++)); // Increment phone number
-        person.setCategory("5");
-        person.setAssemblyConstituency(236);
+//        person.setCategory("5");
+        person.setAssemblyConstituency(365);
         return person;
     }
 

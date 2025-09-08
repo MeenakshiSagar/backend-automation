@@ -11,6 +11,13 @@
       "minLength": "{{RELATION_NAME_INVALID_FORMAT}}",
       "maxLength": "{{RELATION_NAME_INVALID_FORMAT}}",
       "invalidFormat": "{{RELATION_NAME_INVALID_FORMAT}}"
+    },
+    "phone_number": {
+      "required": "Mandatory fields can not be empty: Phone Number",
+      "minLength": "{{PHONE_NUMBER_INVALID_FORMAT}}",
+      "maxLength": "{{PHONE_NUMBER_INVALID_FORMAT}}",
+      "invalidFormat": "{{PHONE_NUMBER_INVALID_FORMAT}}",
+      "startingFrom2To4": "{{PHONE_NUMBER_INVALID_FORMAT}}"
     }
   }
 }
