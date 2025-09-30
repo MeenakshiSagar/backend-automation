@@ -156,4 +156,23 @@ public class PersonDataProvider {
                 {RationCardTestDataType.STRING_ALPHANUMERIC, null}
         };
     }
+
+    @DataProvider(name = "ageTestCases")
+    public Object[][] ageTestCases() {
+        return new Object[][]{
+                {AgeTestDataType.EMPTY, "required"},
+                {AgeTestDataType.LESS_THAN_MIN, "minValue"},
+                {AgeTestDataType.MORE_THAN_MAX, "maxValue"},
+                {AgeTestDataType.EXACT_MIN, null},
+                {AgeTestDataType.EXACT_MAX, null},
+                {AgeTestDataType.VALID_RANGE, null},
+                {AgeTestDataType.STRING_NUMERIC, null},
+                {AgeTestDataType.STRING_NON_NUMERIC, "invalidFormat"},
+                {AgeTestDataType.SPECIAL_CHARACTERS, "invalidFormat"},
+                {AgeTestDataType.SPACES, "invalidFormat"},
+                {AgeTestDataType.DECIMAL_VALUE, "invalidFormat"},
+                {AgeTestDataType.NEGATIVE, "minValue"},
+                {AgeTestDataType.ZERO, "minValue"}
+        };
+    }
 }

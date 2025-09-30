@@ -79,4 +79,20 @@ public class PersonDataValidationTests extends BaseTest {
                     "Expected error message: " + expectedErrorMessage);
         }
     }
+
+    @Test(dataProvider = "ageTestCases", dataProviderClass = PersonDataProvider.class)
+    public void testAgeValidation(String testName, String expectedErrorKey){
+
+        PersonRequest person = FakerDataGenerator.getInvalidPerson("age", testName);
+        Response response = PersonService.createPerson(person);
+        if (expectedErrorKey == null) {
+            Assert.assertEquals(response.getStatusCode(), 201, "Valid age value is expected.");
+        } else {
+            Assert.assertEquals(response.getStatusCode(), 400, "Expected invalid age value is rejected.");
+            String expectedErrorMessage = ErrorMessagesHelper.getErrorMessage("person." + expectedErrorKey);
+            Assert.assertTrue(response.getBody().asString().contains(expectedErrorMessage),
+                    "Expected error message: " + expectedErrorMessage);
+        }
+
+    }
 }

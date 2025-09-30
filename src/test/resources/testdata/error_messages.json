@@ -18,6 +18,11 @@
       "maxLength": "{{PHONE_NUMBER_INVALID_FORMAT}}",
       "invalidFormat": "{{PHONE_NUMBER_INVALID_FORMAT}}",
       "startingFrom2To4": "{{PHONE_NUMBER_INVALID_FORMAT}}"
-    }
+    },
+    "age": {
+      "required": "Mandatory fields can not be empty: Age",
+      "minValue": "Age cannot be less than 18",
+      "maxValue": "Age cannot be more than 123",
+      "invalidFormat": "Age should be a valid number" }
   }
 }
