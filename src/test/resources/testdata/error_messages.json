@@ -21,8 +21,15 @@
     },
     "age": {
       "required": "Mandatory fields can not be empty: Age",
-      "minValue": "Age cannot be less than 18",
-      "maxValue": "Age cannot be more than 123",
-      "invalidFormat": "Age should be a valid number" }
+      "minValue": "{{AGE_INVALID_FORMAT}}",
+      "maxValue": "{{AGE_INVALID_FORMAT}}",
+      "invalidFormat": "{{AGE_INVALID_FORMAT}}"
+    },
+    "voter_id": {
+      "required": "Mandatory fields can not be empty: Voter Id",
+      "invalidFormat": "{{VOTER_ID_INVALID_FORMAT}}",
+      "minLength": "{{VOTER_ID_INVALID_FORMAT}}",
+      "maxLength": "{{VOTER_ID_INVALID_FORMAT}}"
+    }
   }
 }

@@ -29,6 +29,12 @@ public class ErrorMessagesHelper {
                     if (message.contains("{{NAME_INVALID_FORMAT}}")) {
                         message = message.replace("{{NAME_INVALID_FORMAT}}", ErrorMessagesConstants.NAME_INVALID_FORMAT);
                     }
+                    if (message.contains("{{AGE_INVALID_FORMAT}}")) {
+                       message = message.replace("{{AGE_INVALID_FORMAT}}", ErrorMessagesConstants.AGE_INVALID_FORMAT);
+                    }
+                    if (message.contains("{{VOTER_ID_INVALID_FORMAT}}")){
+                        message = message.replace("{{VOTER_ID_INVALID_FORMAT}}", ErrorMessagesConstants.VOTER_ID_INVALID_FORMAT);
+                    }
                     // You can add more placeholder replacements here if needed.
                     return message;
                 } else {

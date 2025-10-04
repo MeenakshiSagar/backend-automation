@@ -15,7 +15,7 @@ import static org.testng.Assert.assertTrue;
 public class PersonDataValidationTests extends BaseTest {
 
     /**
-     * these test will run all the test cases which validate name field.
+     * these tests will run all the test cases which validate the name field.
      */
     @Test(dataProvider = "nameTestCases", dataProviderClass = PersonDataProvider.class)
     public void testNameFieldValidation(String testName, String expectedErrorKey) {
@@ -32,7 +32,7 @@ public class PersonDataValidationTests extends BaseTest {
     }
 
     /**
-     * these test will run all the test cases which validate relation name field.
+     * these tests will run all the test cases which validate the relation name field.
      */
     @Test(dataProvider = "relationNameTestCases", dataProviderClass = PersonDataProvider.class)
     public void testRelationFieldValidation(String testName, String expectedErrorKey) {
@@ -65,6 +65,10 @@ public class PersonDataValidationTests extends BaseTest {
         }
     }
 
+    /**
+     * these tests will run all the test cases which validate the ration card field.
+     */
+
     @Test(dataProvider = "rationCardTestCases", dataProviderClass = PersonDataProvider.class)
     public void testRationCardValidation(String testName, String expectedErrorKey) {
         PersonRequest person = FakerDataGenerator.getInvalidPerson("rationCard", testName);
@@ -80,6 +84,10 @@ public class PersonDataValidationTests extends BaseTest {
         }
     }
 
+
+    /**
+     * these tests will run all the test cases which validate the age field.
+     */
     @Test(dataProvider = "ageTestCases", dataProviderClass = PersonDataProvider.class)
     public void testAgeValidation(String testName, String expectedErrorKey){
 
@@ -93,6 +101,20 @@ public class PersonDataValidationTests extends BaseTest {
             Assert.assertTrue(response.getBody().asString().contains(expectedErrorMessage),
                     "Expected error message: " + expectedErrorMessage);
         }
+    }
 
+    @Test(dataProvider = "voterIDTestCases", dataProviderClass = PersonDataProvider.class)
+    public void testVoterIDValidation(String testName, String expectedErrorKey){
+        PersonRequest person = FakerDataGenerator.getInvalidPerson("voter_id", testName);
+        Response response = PersonService.createPerson(person);
+        if (expectedErrorKey == null) {
+            Assert.assertEquals(response.getStatusCode(), 201, "Valid voter id value is expected.");
+        } else {
+            Assert.assertEquals(response.getStatusCode(), 400, "Expected invalid voter id value is rejected.");
+            String expectedErrorMessage = ErrorMessagesHelper.getErrorMessage("person." + expectedErrorKey);
+            Assert.assertTrue(response.getBody().asString().contains(expectedErrorMessage),
+                    "Expected error message: " + expectedErrorMessage);
+
+        }
     }
 }

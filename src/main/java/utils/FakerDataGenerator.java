@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class
 
 FakerDataGenerator {
-    private static long phoneCounter = 6555555551L;
+    private static long phoneCounter = 6591555558L;
 
     private static final Faker faker = new Faker();
 
@@ -47,7 +47,7 @@ FakerDataGenerator {
             case EXACT_MIN -> "18";
             case EXACT_MAX -> "123";
             case VALID_RANGE -> String.valueOf(Faker.instance().number().numberBetween(19, 122));
-            case STRING_NUMERIC -> "\"" + Faker.instance().number().numberBetween(18, 99) + "\""; // Numeric as string
+            case STRING_NUMERIC -> String.valueOf(Faker.instance().number().numberBetween(18, 99)); // Numeric as a string
             case STRING_NON_NUMERIC -> "eighteen";
             case SPECIAL_CHARACTERS -> "@ge#";
             case SPACES -> "  ";
@@ -110,22 +110,26 @@ FakerDataGenerator {
         };
     }
 
-    public static String generateVoterNumber(VoterNumberTestDataType type) {
+    public static String generateVoterID(VoterIDTestDataType type) {
         return switch (type) {
             case EMPTY -> "";
-            case LESS_THAN_MIN_LENGTH -> faker.regexify("[A-Za-z0-9]{1,3}");
-            case MORE_THAN_MAX_LENGTH -> faker.regexify("[A-Za-z0-9]{21,25}");
-            case SPECIAL_CHARACTERS -> faker.regexify("[@#$%^&*!]{6,10}");
-            case VALID_ALPHANUMERIC -> faker.regexify("[A-Za-z0-9]{10}");
-            case ONLY_NUMERIC -> faker.number().digits(10);
-            case ONLY_ALPHABETS -> faker.letterify("??????????"); // 10 alphabets
-            case MIXED_CASE -> "AbCdEfGh12";
-            case SPACES_INCLUDED -> "  AB12CD 34 ";
-            case WITH_UNDERSCORE_OR_DASH -> "AB_12-CD34";
-            case UNICODE_CHARACTERS -> "मतदाता१२३४"; // Hindi + digits (invalid)
-            case ZERO_FILLED -> "0000000000";
-            case VALID_EDGE_MIN_LENGTH -> faker.regexify("[A-Za-z0-9]{4}");
-            case VALID_EDGE_MAX_LENGTH -> faker.regexify("[A-Za-z0-9]{20}");
+            case NULL_VALUE -> null;
+            case LESS_THAN_MIN -> faker.regexify("[A-Z0-9]{8}");
+            case MORE_THAN_MAX -> faker.regexify("[A-Z0-9]{17}");
+            case MIN_LENGTH, VALID_10_CHAR -> faker.regexify("[A-Z0-9]{10}");
+            case MAX_LENGTH, VALID_16_CHAR -> faker.regexify("[A-Z0-9]{16}");
+            case LOWERCASE -> faker.regexify("[a-z0-9]{10}");
+            case NUMERIC_ONLY -> faker.number().digits(10);
+            case ALPHABET_ONLY -> faker.regexify("[A-Z]{10}");
+            case FORWARD_SLASH -> "AB12/CD34EF";
+            case MULTIPLE_FORWARD_SLASH -> "AB/12/CD34E";
+            case BACKWARD_SLASH -> "9A8B\\7C6D\\5E4F";
+            case INVALID_SPECIAL_CHAR -> "ABC@1234DE";
+            case SPACE_IN_INPUT -> "ABC 1234DE";
+            case LEADING_TRAILING_SPACES -> "  AB12CD34EF  ";
+            case UNICODE_CHARACTERS -> "AB12ＣＤ34ＥＦ"; // full-width characters
+            case MIXED_CASE -> "aB12Cd34eF";
+            case VALID -> "AB12CD34EF";
         };
     }
 
@@ -175,6 +179,8 @@ FakerDataGenerator {
         person.setPhoneNumber(String.valueOf(phoneCounter++)); // Increment phone number
 //        person.setCategory("5");
         person.setAssemblyConstituency(365);
+        person.setAge("25");
+        person.setVoterID("ABCDFG8912I");
         return person;
     }
 
@@ -200,6 +206,11 @@ FakerDataGenerator {
             case "phoneNumber":
                 person.setPhoneNumber(invalidValue);
                 break;
+            case "age":
+                person.setAge(invalidValue);
+                break;
+            case "voter_id":
+                person.setVoterID(invalidValue);
         }
         return person;
     }

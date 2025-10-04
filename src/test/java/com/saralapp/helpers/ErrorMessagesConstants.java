@@ -13,4 +13,10 @@ public class ErrorMessagesConstants {
             "Mandatory fields can not be empty: Relation Name";
 
     public static final String PHONE_NUMBER_INVALID_FORMAT = "Phone Number: Invalid format, must be 10 digits long and start with 5-9.";
+
+    public static final String AGE_INVALID_FORMAT = "Age: This is an invalid format. The value must be numeric and between 18 and 123.";
+
+    public static final String AGE_REQUIRED = "Mandatory fields can not be empty: Age";
+
+    public static final String VOTER_ID_INVALID_FORMAT = "Voter ID: Invalid format, must be 10–16 characters (A–Z, 0–9, /, \\\\).";
 }

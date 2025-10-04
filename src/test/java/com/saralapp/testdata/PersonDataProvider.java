@@ -6,9 +6,6 @@ import org.testng.annotations.DataProvider;
 import utils.FakerDataGenerator;
 import utils.FormFilterData;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PersonDataProvider {
 
     public static PersonRequest getValidPerson() {
@@ -107,26 +104,6 @@ public class PersonDataProvider {
         };
     }
 
-    @DataProvider(name = "voterNumberTestCases")
-    public static Object[][] voterNumberTestCases() {
-        return new Object[][]{
-                {VoterNumberTestDataType.EMPTY, "voter_number.required"},
-                {VoterNumberTestDataType.LESS_THAN_MIN_LENGTH, "voter_number.minLength"},
-                {VoterNumberTestDataType.MORE_THAN_MAX_LENGTH, "voter_number.maxLength"},
-                {VoterNumberTestDataType.SPECIAL_CHARACTERS, "voter_number.invalidFormat"},
-                {VoterNumberTestDataType.SPACES_INCLUDED, "voter_number.invalidFormat"},
-                {VoterNumberTestDataType.WITH_UNDERSCORE_OR_DASH, "voter_number.invalidFormat"},
-                {VoterNumberTestDataType.UNICODE_CHARACTERS, "voter_number.invalidFormat"},
-                {VoterNumberTestDataType.ZERO_FILLED, "voter_number.invalidFormat"},
-                {VoterNumberTestDataType.ONLY_ALPHABETS, null},
-                {VoterNumberTestDataType.ONLY_NUMERIC, null},
-                {VoterNumberTestDataType.MIXED_CASE, null},
-                {VoterNumberTestDataType.VALID_ALPHANUMERIC, null},
-                {VoterNumberTestDataType.VALID_EDGE_MIN_LENGTH, null},
-                {VoterNumberTestDataType.VALID_EDGE_MAX_LENGTH, null}
-        };
-    }
-
     @DataProvider(name = "aadhaarNumberTestCases")
     public static Object[][] aadhaarNumberTestCases() {
         return new Object[][]{
@@ -160,19 +137,43 @@ public class PersonDataProvider {
     @DataProvider(name = "ageTestCases")
     public Object[][] ageTestCases() {
         return new Object[][]{
-                {AgeTestDataType.EMPTY, "required"},
-                {AgeTestDataType.LESS_THAN_MIN, "minValue"},
-                {AgeTestDataType.MORE_THAN_MAX, "maxValue"},
-                {AgeTestDataType.EXACT_MIN, null},
-                {AgeTestDataType.EXACT_MAX, null},
-                {AgeTestDataType.VALID_RANGE, null},
-                {AgeTestDataType.STRING_NUMERIC, null},
-                {AgeTestDataType.STRING_NON_NUMERIC, "invalidFormat"},
-                {AgeTestDataType.SPECIAL_CHARACTERS, "invalidFormat"},
-                {AgeTestDataType.SPACES, "invalidFormat"},
-                {AgeTestDataType.DECIMAL_VALUE, "invalidFormat"},
-                {AgeTestDataType.NEGATIVE, "minValue"},
-                {AgeTestDataType.ZERO, "minValue"}
+
+                {FakerDataGenerator.generateAge(AgeTestDataType.EMPTY), "age.required"},
+                {FakerDataGenerator.generateAge(AgeTestDataType.LESS_THAN_MIN), "age.minValue"},
+                {FakerDataGenerator.generateAge(AgeTestDataType.MORE_THAN_MAX), "age.maxValue"},
+                {FakerDataGenerator.generateAge(AgeTestDataType.EXACT_MIN), null},
+                {FakerDataGenerator.generateAge(AgeTestDataType.EXACT_MAX), null},
+                {FakerDataGenerator.generateAge(AgeTestDataType.VALID_RANGE), null},
+                {FakerDataGenerator.generateAge(AgeTestDataType.STRING_NUMERIC), null},
+                {FakerDataGenerator.generateAge(AgeTestDataType.STRING_NON_NUMERIC), "age.invalidFormat"},
+                {FakerDataGenerator.generateAge(AgeTestDataType.SPECIAL_CHARACTERS), "age.invalidFormat"},
+                {FakerDataGenerator.generateAge(AgeTestDataType.SPACES), "age.required"},
+                {FakerDataGenerator.generateAge(AgeTestDataType.DECIMAL_VALUE), "age.invalidFormat"},
+                {FakerDataGenerator.generateAge(AgeTestDataType.NEGATIVE), "age.minValue"},
+                {FakerDataGenerator.generateAge(AgeTestDataType.ZERO), "age.minValue"}
+        };
+    }
+
+    @DataProvider(name = "voterIDTestCases")
+    public Object[][] voterIDTestCases() {
+        return new Object[][]{
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.EMPTY), "voter_id.required"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.NULL_VALUE), "voter_id.required"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.LESS_THAN_MIN), "voter_id.minLength"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.MORE_THAN_MAX), "voter_id.maxLength"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.INVALID_SPECIAL_CHAR), "voter_id.invalidFormat"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.SPACE_IN_INPUT), "voter_id.invalidFormat"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.LEADING_TRAILING_SPACES), "voter_id.invalidFormat"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.UNICODE_CHARACTERS), "voter_id.invalidFormat"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.MIXED_CASE), null},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.NUMERIC_ONLY), null},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.ALPHABET_ONLY), null},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.FORWARD_SLASH), null},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.MULTIPLE_FORWARD_SLASH), null},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.BACKWARD_SLASH), null}, // Allowed as per note
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.VALID_10_CHAR), null},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.VALID_16_CHAR), null},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.VALID), null}
         };
     }
 }
