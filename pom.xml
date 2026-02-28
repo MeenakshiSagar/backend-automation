@@ -56,6 +56,12 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.15.2</version>  <!-- Use the latest version -->
         </dependency>
+        <!-- Apache HttpClient used for PUT to signed URLs to ensure Content-Length is sent reliably -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

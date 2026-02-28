@@ -52,6 +52,9 @@ public class PersonRequest {
     @JsonProperty("primary_member_id")
     private String primaryMemberID;
 
+    @JsonProperty("active_member_id")
+    private String activeMemberID;
+
     @JsonProperty("age")
     private String age;
 
@@ -193,9 +196,20 @@ public class PersonRequest {
     @JsonProperty("linkedin_profile")
     private String linkedinProfile;
 
+    @JsonProperty("party_district_id")
+    private Integer partyZilaId;
 
+    @JsonProperty("party_mandal_id")
+    private Integer partyMandalId;
 
+    @JsonProperty("ration_card_url")
+    private String rationCardUrl;
 
+    @JsonProperty("voter_url")
+    private String voterUrl;
+
+    @JsonProperty("aadhaar_url")
+    private String aadhaarUrl;
 
 
 

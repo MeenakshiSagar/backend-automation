@@ -30,6 +30,19 @@
       "invalidFormat": "{{VOTER_ID_INVALID_FORMAT}}",
       "minLength": "{{VOTER_ID_INVALID_FORMAT}}",
       "maxLength": "{{VOTER_ID_INVALID_FORMAT}}"
+    },
+    "active_member_id": {
+      "required": "Mandatory fields can not be empty: Active Member Id",
+      "invalidFormat": "Active Member ID: Invalid format, only letters and numbers allowed (max 50 characters)."
+    },
+    "party_zila": {
+      "required": "Mandatory fields can not be empty: Party Zila",
+      "invalidSelection": "Party Zila: Invalid selection. No matching value found for the provided ID."
+    },
+    "party_mandal": {
+      "required": "Mandatory fields can not be empty: Party Mandal",
+      "invalidMapping": "Party Mandal: Invalid selection. The provided party_mandal_id is not mapped with the given party_zila_id",
+      "invalidSelection": "Party Mandal: Invalid selection. No matching value found for the provided ID."
     }
   }
 }

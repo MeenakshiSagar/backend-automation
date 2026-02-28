@@ -3,6 +3,11 @@ package utils;
 import com.github.javafaker.Faker;
 import enums.*;
 import models.person.PersonRequest;
+import utils.faker.generator.AgeData;
+import utils.faker.generator.VoterIdData;
+import utils.faker.generator.ActiveMemberIdData;
+import utils.faker.generator.PartyZilaData;
+import utils.faker.generator.PartyMandalData;
 
 import java.time.LocalDate;
 
@@ -39,22 +44,9 @@ FakerDataGenerator {
         };
     }
 
+    // Delegate to AgeData generator
     public static String generateAge(AgeTestDataType type) {
-        return switch (type) {
-            case EMPTY -> "";
-            case LESS_THAN_MIN -> String.valueOf(Faker.instance().number().numberBetween(0, 17));
-            case MORE_THAN_MAX -> String.valueOf(Faker.instance().number().numberBetween(124, 150));
-            case EXACT_MIN -> "18";
-            case EXACT_MAX -> "123";
-            case VALID_RANGE -> String.valueOf(Faker.instance().number().numberBetween(19, 122));
-            case STRING_NUMERIC -> String.valueOf(Faker.instance().number().numberBetween(18, 99)); // Numeric as a string
-            case STRING_NON_NUMERIC -> "eighteen";
-            case SPECIAL_CHARACTERS -> "@ge#";
-            case SPACES -> "  ";
-            case DECIMAL_VALUE -> "25.5";
-            case NEGATIVE -> "-25";
-            case ZERO -> "0";
-        };
+        return AgeData.generate(type);
     }
 
     public static String generatePinCode(PinCodeTestDataType type) {
@@ -110,27 +102,9 @@ FakerDataGenerator {
         };
     }
 
+    // Delegate to VoterIdData generator
     public static String generateVoterID(VoterIDTestDataType type) {
-        return switch (type) {
-            case EMPTY -> "";
-            case NULL_VALUE -> null;
-            case LESS_THAN_MIN -> faker.regexify("[A-Z0-9]{8}");
-            case MORE_THAN_MAX -> faker.regexify("[A-Z0-9]{17}");
-            case MIN_LENGTH, VALID_10_CHAR -> faker.regexify("[A-Z0-9]{10}");
-            case MAX_LENGTH, VALID_16_CHAR -> faker.regexify("[A-Z0-9]{16}");
-            case LOWERCASE -> faker.regexify("[a-z0-9]{10}");
-            case NUMERIC_ONLY -> faker.number().digits(10);
-            case ALPHABET_ONLY -> faker.regexify("[A-Z]{10}");
-            case FORWARD_SLASH -> "AB12/CD34EF";
-            case MULTIPLE_FORWARD_SLASH -> "AB/12/CD34E";
-            case BACKWARD_SLASH -> "9A8B\\7C6D\\5E4F";
-            case INVALID_SPECIAL_CHAR -> "ABC@1234DE";
-            case SPACE_IN_INPUT -> "ABC 1234DE";
-            case LEADING_TRAILING_SPACES -> "  AB12CD34EF  ";
-            case UNICODE_CHARACTERS -> "AB12ＣＤ34ＥＦ"; // full-width characters
-            case MIXED_CASE -> "aB12Cd34eF";
-            case VALID -> "AB12CD34EF";
-        };
+        return VoterIdData.generate(type);
     }
 
     public static String generateAadhaarNumber(AadhaarNumberTestDataType type) {
@@ -185,6 +159,56 @@ FakerDataGenerator {
     }
 
 
+    // Overloaded helper to accept enum or Object test values from DataProviders
+    public static PersonRequest getInvalidPerson(String field, Object invalidValue) {
+        String valueAsString;
+        if (invalidValue == null) {
+            valueAsString = null;
+        } else if (invalidValue instanceof String) {
+            valueAsString = (String) invalidValue;
+        } else if (invalidValue instanceof BloodGroupTestDataType) {
+            valueAsString = generateBloodGroup((BloodGroupTestDataType) invalidValue);
+        } else if (invalidValue instanceof FullAddressTestDataType) {
+            valueAsString = generateFullAddress((FullAddressTestDataType) invalidValue);
+        } else if (invalidValue instanceof TehsilTestDataType) {
+            valueAsString = generateTehsil((TehsilTestDataType) invalidValue);
+        } else if (invalidValue instanceof VillageTestDataType) {
+            valueAsString = generateVillage((VillageTestDataType) invalidValue);
+        } else if (invalidValue instanceof PhoneNumberTestDataType) {
+            valueAsString = generatePhone((PhoneNumberTestDataType) invalidValue);
+        } else if (invalidValue instanceof PinCodeTestDataType) {
+            valueAsString = generatePinCode((PinCodeTestDataType) invalidValue);
+        } else if (invalidValue instanceof EmailTestDataType) {
+            EmailTestDataType et = (EmailTestDataType) invalidValue;
+            switch (et) {
+                case EMPTY -> valueAsString = "";
+                case VALID -> valueAsString = faker.internet().emailAddress();
+                case UPPERCASE_EMAIL -> valueAsString = faker.internet().emailAddress().toUpperCase();
+                default -> valueAsString = "invalid_email_example";
+            }
+        } else if (invalidValue instanceof AadhaarNumberTestDataType) {
+            valueAsString = generateAadhaarNumber((AadhaarNumberTestDataType) invalidValue);
+        } else if (invalidValue instanceof RationCardTestDataType) {
+            valueAsString = generateRationCardNumber((RationCardTestDataType) invalidValue);
+        } else if (invalidValue instanceof VoterIDTestDataType) {
+            valueAsString = generateVoterID((VoterIDTestDataType) invalidValue);
+        } else if (invalidValue instanceof AgeTestDataType) {
+            valueAsString = generateAge((AgeTestDataType) invalidValue);
+        } else if (invalidValue instanceof enums.ActiveMemberIdTestDataType) {
+            enums.ActiveMemberIdTestDataType am = (enums.ActiveMemberIdTestDataType) invalidValue;
+            valueAsString = ActiveMemberIdData.generate(am);
+        } else if (invalidValue instanceof enums.PartyZilaTestDataType) {
+            valueAsString = PartyZilaData.generate((enums.PartyZilaTestDataType) invalidValue);
+        } else if (invalidValue instanceof enums.PartyMandalTestDataType) {
+            valueAsString = PartyMandalData.generate((enums.PartyMandalTestDataType) invalidValue);
+        } else {
+            // Fallback to calling toString() for any other enum/object
+            valueAsString = invalidValue.toString();
+        }
+
+        return getInvalidPerson(field, valueAsString);
+    }
+
     public static PersonRequest getInvalidPerson(String field, String invalidValue) {
         PersonRequest person = getValidPerson(); // Start with a valid person
 
@@ -200,6 +224,7 @@ FakerDataGenerator {
                 break;
             case "smartphone":
                 person.setSmartphone(invalidValue);
+                break;
             case "email":
                 person.setEmail(invalidValue);
                 break;
@@ -211,7 +236,146 @@ FakerDataGenerator {
                 break;
             case "voter_id":
                 person.setVoterID(invalidValue);
+                break;
+            case "activeMemberId":
+                // Active Member ID maps to 'active_member_id' in the PersonRequest model
+                person.setActiveMemberID(invalidValue);
+                break;
+            case "partyZila":
+                // party zila id maps to 'party_zila_id' - parse safely
+                if (invalidValue == null || invalidValue.isBlank()) {
+                    person.setPartyZilaId(null);
+                } else {
+                    try {
+                        person.setPartyZilaId(Integer.valueOf(invalidValue));
+                    } catch (NumberFormatException e) {
+                        person.setPartyZilaId(null);
+                    }
+                }
+                break;
+            case "partyMandal":
+                // party mandal id maps to 'party_mandal_id' - parse safely
+                if (invalidValue == null || invalidValue.isBlank()) {
+                    person.setPartyMandalId(null);
+                } else {
+                    try {
+                        person.setPartyMandalId(Integer.valueOf(invalidValue));
+                    } catch (NumberFormatException e) {
+                        person.setPartyMandalId(null);
+                    }
+                }
+                break;
+            case "full_address":
+            case "fullAddress":
+                person.setFullAddress(invalidValue);
+                break;
+            case "tehsil":
+            case "taluka":
+                person.setTehsil(invalidValue);
+                break;
+            case "village":
+                person.setVillage(invalidValue);
+                break;
+            case "blood_group":
+            case "bloodGroup":
+                person.setBloodGroup(invalidValue);
+                break;
         }
         return person;
     }
+
+
+    // New small generators for full address, tehsil, village
+    private static String generateFullAddress(FullAddressTestDataType t) {
+        switch (t) {
+            case VALID_ENGLISH: return "123, Gandhi Nagar, Main Road";
+            case VALID_HINDI: return "गाँधी नगर, मुख्य मार्ग";
+            case VALID_TAMIL: return "காந்தி நகர், முக்கிய சாலை";
+            case LETTERS_AND_NUMBERS: return "Flat 21B, Sector 15, Noida";
+            case ALLOWED_PUNCTUATION: return "House No-45/3, Shastri Nagar";
+            case MIX_ENGLISH_REGIONAL: return "गाँधी Nagar, Road No 2";
+            case EXACTLY_100: return "123 MG Road, Near City Park, Green Valley Apartments, Block B-402, New Delhi, Delhi 110001, India of";
+            case OVER_100: return "123 MG Road, Near City Park, Green Valley Apartments, Block B-402, New Delhi, Delhi 110001, India ofx";
+            case ONLY_SPACES: return " ";
+            case LEADING_TRAILING_SPACES: return " Gandhi Nagar ";
+            case ONLY_SPECIAL_CHARACTERS: return "@@@@@@@";
+            case EMOJI: return "🏠 Home Address";
+            case NULL_VALUE: return null;
+            case EMPTY_STRING: return "";
+            case MIN_LENGTH: return "A";
+            case NEWLINE: return "Gandhi\nNagar";
+            case TAB: return "Gandhi\tNagar";
+            case MIXED_CASING: return "gAnDhI nAgAr";
+            case MULTI_SCRIPT: return "गाँधी Nagar 市场";
+            case DIACRITICS: return "São Paulo Nagar";
+            case STRESS_DB_ENCODING: return "Árvíztűrő tükörfúrógép – déjà vu, naïve façade, smörgåsbord, São Tomé, Łódź, Αθήνα, القاهرة!";
+            default: return "";
+        }
+    }
+
+    private static String generateTehsil(TehsilTestDataType t) {
+        switch (t) {
+            case VALID_ENGLISH: return "Taluka One";
+            case VALID_HINDI: return "तहसील दो";
+            case VALID_TAMIL: return "तेहसील तिन";
+            case LETTERS_AND_NUMBERS: return "Taluka 12B";
+            case ALLOWED_PUNCTUATION: return "Taluka-No-5/3";
+            case MIX_ENGLISH_REGIONAL: return "Taluka गल्ला 2";
+            case EXACTLY_100: return "123 MG Road, Near City Park, Green Valley Apartments, Block B-402, New Delhi, Delhi 110001, India of";
+            case OVER_100: return "123 MG Road, Near City Park, Green Valley Apartments, Block B-402, New Delhi, Delhi 110001, India ofx";
+            case ONLY_SPACES: return " ";
+            case LEADING_TRAILING_SPACES: return " Taluka One ";
+            case ONLY_SPECIAL_CHARACTERS: return "@@@@@@@";
+            case EMOJI: return "🏠 Taluka";
+            case NULL_VALUE: return null;
+            case EMPTY_STRING: return "";
+            case MIN_LENGTH: return "T";
+            case NEWLINE: return "Taluka\nOne";
+            case TAB: return "Taluka\tOne";
+            case MIXED_CASING: return "tAlUkA oNe";
+            case MULTI_SCRIPT: return "Taluka नगर 市场";
+            case DIACRITICS: return "São Taluka";
+            case STRESS_DB_ENCODING: return "Árvíztűrő tükörfúrógép – déjà vu, naïve façade, smörgåsbord, São Tomé, Łódź, Αθήνα, القاهرة!";
+            default: return "";
+        }
+    }
+
+    private static String generateVillage(VillageTestDataType t) {
+        switch (t) {
+            case VALID_ENGLISH: return "Village One";
+            case VALID_HINDI: return "गाँधी गांव";
+            case VALID_TAMIL: return "கிராமம் ஒன்று";
+            case LETTERS_AND_NUMBERS: return "Village 21A";
+            case ALLOWED_PUNCTUATION: return "Village-No-45/3";
+            case MIX_ENGLISH_REGIONAL: return "गाँधी Village 2";
+            case EXACTLY_100: return "123 MG Road, Near City Park, Green Valley Apartments, Block B-402, New Delhi, Delhi 110001, India of";
+            case OVER_100: return "123 MG Road, Near City Park, Green Valley Apartments, Block B-402, New Delhi, Delhi 110001, India ofx";
+            case ONLY_SPACES: return " ";
+            case LEADING_TRAILING_SPACES: return " Village One ";
+            case ONLY_SPECIAL_CHARACTERS: return "@@@@@@@";
+            case EMOJI: return "🏠 Village";
+            case NULL_VALUE: return null;
+            case EMPTY_STRING: return "";
+            case MIN_LENGTH: return "V";
+            case NEWLINE: return "Village\nOne";
+            case TAB: return "Village\tOne";
+            case MIXED_CASING: return "vIlLaGe oNe";
+            case MULTI_SCRIPT: return "Village गाँधी 市场";
+            case DIACRITICS: return "São Village";
+            case STRESS_DB_ENCODING: return "Árvíztűrő tükörfúrógép – déjà vu, naïve façade, smörgåsbord, São Tomé, Łódź, Αθήνα, القاهرة!";
+            default: return "";
+        }
+    }
+
+    // Blood Group generator
+    private static String generateBloodGroup(enums.BloodGroupTestDataType t) {
+        switch (t) {
+            case EMPTY: return "";
+            case NOT_EXISTS: return "X+";
+            case VALID_EXACT_CASE: return "A+";
+            case VALID_DIFFERENT_CASE: return "a+";
+            default: return "";
+        }
+    }
+
 }

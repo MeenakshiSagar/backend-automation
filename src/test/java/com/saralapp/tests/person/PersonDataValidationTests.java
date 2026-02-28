@@ -2,7 +2,6 @@ package com.saralapp.tests.person;
 
 import com.saralapp.helpers.ErrorMessagesHelper;
 import com.saralapp.tests.BaseTest;
-import enums.PhoneNumberTestDataType;
 import io.restassured.response.Response;
 import models.person.PersonRequest;
 import org.testng.Assert;
@@ -49,8 +48,8 @@ public class PersonDataValidationTests extends BaseTest {
     }
 
     @Test(dataProvider = "phoneNumberTestCases", dataProviderClass = PersonDataProvider.class)
-    public void testPhoneNumberValidation(String phoneTestName, String expectedErrorKey) {
-        PersonRequest person = FakerDataGenerator.getInvalidPerson("phoneNumber", phoneTestName);
+    public void testPhoneNumberValidation(Object phoneTestValue, String expectedErrorKey) {
+        PersonRequest person = FakerDataGenerator.getInvalidPerson("phoneNumber", phoneTestValue);
 
         Response response = PersonService.createPerson(person);
 
@@ -115,6 +114,72 @@ public class PersonDataValidationTests extends BaseTest {
             Assert.assertTrue(response.getBody().asString().contains(expectedErrorMessage),
                     "Expected error message: " + expectedErrorMessage);
 
+        }
+    }
+
+    // ------------------ Pin Code Field Test Cases ------------------
+    @Test(dataProvider = "pinCodeTestCases", dataProviderClass = PersonDataProvider.class)
+    public void testPinCodeValidation(Object pinCodeTestValue, String expectedErrorKey) {
+        PersonRequest person = FakerDataGenerator.getInvalidPerson("pinCode", pinCodeTestValue);
+        Response response = PersonService.createPerson(person);
+
+        if (expectedErrorKey == null) {
+            Assert.assertEquals(response.getStatusCode(), 201, "Expected valid pin code to be accepted.");
+        } else {
+            Assert.assertEquals(response.getStatusCode(), 400, "Expected invalid pin code to be rejected.");
+            String expectedError = ErrorMessagesHelper.getErrorMessage(expectedErrorKey);
+            assertTrue(response.getBody().asString().contains(expectedError),
+                    "Expected error message: " + expectedError + " | Actual response: " + response.getBody().asString());
+        }
+    }
+
+    // ------------------ Email Field Test Cases ------------------
+    @Test(dataProvider = "emailTestCases", dataProviderClass = PersonDataProvider.class)
+    public void testEmailValidation(Object emailTestValue, String expectedErrorKey) {
+        PersonRequest person = FakerDataGenerator.getInvalidPerson("email", emailTestValue);
+        Response response = PersonService.createPerson(person);
+
+        if (expectedErrorKey == null) {
+            Assert.assertEquals(response.getStatusCode(), 201, "Expected valid email to be accepted.");
+        } else {
+            Assert.assertEquals(response.getStatusCode(), 400, "Expected invalid email to be rejected.");
+            String expectedError = ErrorMessagesHelper.getErrorMessage(expectedErrorKey);
+            assertTrue(response.getBody().asString().contains(expectedError),
+                    "Expected error message: " + expectedError + " | Actual response: " + response.getBody().asString());
+        }
+    }
+
+    // ------------------ Aadhaar Number Field Test Cases ------------------
+    @Test(dataProvider = "aadhaarNumberTestCases", dataProviderClass = PersonDataProvider.class)
+    public void testAadhaarNumberValidation(Object aadhaarTestValue, String expectedErrorKey) {
+        PersonRequest person = FakerDataGenerator.getInvalidPerson("aadhaarNumber", aadhaarTestValue);
+        Response response = PersonService.createPerson(person);
+
+        if (expectedErrorKey == null) {
+            Assert.assertEquals(response.getStatusCode(), 201, "Expected valid aadhaar number to be accepted.");
+        } else {
+            Assert.assertEquals(response.getStatusCode(), 400, "Expected invalid aadhaar number to be rejected.");
+            String expectedError = ErrorMessagesHelper.getErrorMessage(expectedErrorKey);
+            assertTrue(response.getBody().asString().contains(expectedError),
+                    "Expected error message: " + expectedError + " | Actual response: " + response.getBody().asString());
+        }
+    }
+
+
+    // ------------------ Active Member ID Field Test Cases ------------------
+    @Test(dataProvider = "activeMemberIdTestCases", dataProviderClass = PersonDataProvider.class)
+    public void testActiveMemberIdValidation(Object activeMemberTestValue, String expectedErrorKey) {
+        PersonRequest person = FakerDataGenerator.getInvalidPerson("activeMemberId", activeMemberTestValue);
+        Response response = PersonService.createPerson(person);
+
+        if (expectedErrorKey == null) {
+            // per test spec for Active Member ID, accepted responses are 200
+            Assert.assertEquals(response.getStatusCode(), 200, "Expected valid Active Member ID to be accepted.");
+        } else {
+            Assert.assertEquals(response.getStatusCode(), 400, "Expected invalid Active Member ID to be rejected.");
+            String expectedError = ErrorMessagesHelper.getErrorMessage(expectedErrorKey);
+            assertTrue(response.getBody().asString().contains(expectedError),
+                    "Expected error message: " + expectedError + " | Actual response: " + response.getBody().asString());
         }
     }
 }

@@ -14,5 +14,10 @@ public class Endpoints {
     public static final String CREATE_PERSON = "/zila/api/data_entry/create";
     public static final String GET_PERSON = "/zila/api/data_entry/get/{id}";
 
+    // Upload APIs
+    public static final String GENERATE_UPLOAD_URL = "/zila/api/data/generate_upload_url";
+
+    // Save form structure
+    public static final String SAVE_FORM_STRUCTURE = "/zila/api/data_entry/save_form_structure";
 
 }
