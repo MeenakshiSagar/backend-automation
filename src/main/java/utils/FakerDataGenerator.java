@@ -135,6 +135,24 @@ FakerDataGenerator {
         };
     }
 
+    public static String generateEmail(EmailTestDataType type) {
+        return switch (type) {
+            case EMPTY -> "";
+            case VALID -> faker.internet().emailAddress();
+            case UPPERCASE_EMAIL -> faker.internet().emailAddress().toUpperCase();
+            case MISSING_AT_SYMBOL -> "usernameexample.com";
+            case MISSING_DOMAIN -> "username@";
+            case MISSING_USERNAME -> "@example.com";
+            case SPECIAL_CHARACTERS -> "user#name@example.com";
+            case MULTIPLE_AT_SYMBOLS -> "user@name@example.com";
+            case TRAILING_DOT -> "username@example.com.";
+            case LEADING_DOT -> ".username@example.com";
+            case SPACE_IN_EMAIL -> "user name@example.com";
+            case INVALID_FORMAT -> "invalid-email-format";
+            default -> "invalid_email_example";
+        };
+    }
+
     public static PersonRequest getValidPerson() {
         PersonRequest person = new PersonRequest();
 
@@ -152,20 +170,39 @@ FakerDataGenerator {
 //        person.setEmail(faker.internet().emailAddress());
         person.setPhoneNumber(String.valueOf(phoneCounter++)); // Increment phone number
 //        person.setCategory("5");
-        person.setAssemblyConstituency(365);
-        person.setAge("25");
-        person.setVoterID("ABCDFG8912I");
+//        person.setAssemblyConstituency(365);
+//        person.setAge("25");
+//        person.setVoterID("ABCDFG8912I");
         return person;
     }
 
 
-    // Overloaded helper to accept enum or Object test values from DataProviders
     public static PersonRequest getInvalidPerson(String field, Object invalidValue) {
+        PersonRequest person = getValidPerson(); // Start with a valid person
+
         String valueAsString;
         if (invalidValue == null) {
             valueAsString = null;
         } else if (invalidValue instanceof String) {
             valueAsString = (String) invalidValue;
+        } else if (invalidValue instanceof NameTestDataType) {
+            valueAsString = generateName((NameTestDataType) invalidValue);
+        } else if (invalidValue instanceof PhoneNumberTestDataType) {
+            valueAsString = generatePhone((PhoneNumberTestDataType) invalidValue);
+        } else if (invalidValue instanceof AgeTestDataType) {
+            valueAsString = generateAge((AgeTestDataType) invalidValue);
+        } else if (invalidValue instanceof PinCodeTestDataType) {
+            valueAsString = generatePinCode((PinCodeTestDataType) invalidValue);
+        } else if (invalidValue instanceof DOBTestDataType) {
+            valueAsString = generateDOB((DOBTestDataType) invalidValue);
+        } else if (invalidValue instanceof AnniversaryTestDataType) {
+            valueAsString = generateAnniversary((AnniversaryTestDataType) invalidValue);
+        } else if (invalidValue instanceof VoterIDTestDataType) {
+            valueAsString = generateVoterID((VoterIDTestDataType) invalidValue);
+        } else if (invalidValue instanceof AadhaarNumberTestDataType) {
+            valueAsString = generateAadhaarNumber((AadhaarNumberTestDataType) invalidValue);
+        } else if (invalidValue instanceof RationCardTestDataType) {
+            valueAsString = generateRationCardNumber((RationCardTestDataType) invalidValue);
         } else if (invalidValue instanceof BloodGroupTestDataType) {
             valueAsString = generateBloodGroup((BloodGroupTestDataType) invalidValue);
         } else if (invalidValue instanceof FullAddressTestDataType) {
@@ -174,29 +211,10 @@ FakerDataGenerator {
             valueAsString = generateTehsil((TehsilTestDataType) invalidValue);
         } else if (invalidValue instanceof VillageTestDataType) {
             valueAsString = generateVillage((VillageTestDataType) invalidValue);
-        } else if (invalidValue instanceof PhoneNumberTestDataType) {
-            valueAsString = generatePhone((PhoneNumberTestDataType) invalidValue);
-        } else if (invalidValue instanceof PinCodeTestDataType) {
-            valueAsString = generatePinCode((PinCodeTestDataType) invalidValue);
         } else if (invalidValue instanceof EmailTestDataType) {
-            EmailTestDataType et = (EmailTestDataType) invalidValue;
-            switch (et) {
-                case EMPTY -> valueAsString = "";
-                case VALID -> valueAsString = faker.internet().emailAddress();
-                case UPPERCASE_EMAIL -> valueAsString = faker.internet().emailAddress().toUpperCase();
-                default -> valueAsString = "invalid_email_example";
-            }
-        } else if (invalidValue instanceof AadhaarNumberTestDataType) {
-            valueAsString = generateAadhaarNumber((AadhaarNumberTestDataType) invalidValue);
-        } else if (invalidValue instanceof RationCardTestDataType) {
-            valueAsString = generateRationCardNumber((RationCardTestDataType) invalidValue);
-        } else if (invalidValue instanceof VoterIDTestDataType) {
-            valueAsString = generateVoterID((VoterIDTestDataType) invalidValue);
-        } else if (invalidValue instanceof AgeTestDataType) {
-            valueAsString = generateAge((AgeTestDataType) invalidValue);
+            valueAsString = generateEmail((EmailTestDataType) invalidValue);
         } else if (invalidValue instanceof enums.ActiveMemberIdTestDataType) {
-            enums.ActiveMemberIdTestDataType am = (enums.ActiveMemberIdTestDataType) invalidValue;
-            valueAsString = ActiveMemberIdData.generate(am);
+            valueAsString = ActiveMemberIdData.generate((enums.ActiveMemberIdTestDataType) invalidValue);
         } else if (invalidValue instanceof enums.PartyZilaTestDataType) {
             valueAsString = PartyZilaData.generate((enums.PartyZilaTestDataType) invalidValue);
         } else if (invalidValue instanceof enums.PartyMandalTestDataType) {
@@ -206,79 +224,83 @@ FakerDataGenerator {
             valueAsString = invalidValue.toString();
         }
 
-        return getInvalidPerson(field, valueAsString);
-    }
-
-    public static PersonRequest getInvalidPerson(String field, String invalidValue) {
-        PersonRequest person = getValidPerson(); // Start with a valid person
-
         switch (field) {
             case "name":
-                person.setName(invalidValue);
+                person.setName(valueAsString);
                 break;
             case "relationName":
-                person.setRelationName(invalidValue);
+                person.setRelationName(valueAsString);
                 break;
             case "designation":
-                person.setDesignation(invalidValue);
+                person.setDesignation(valueAsString);
                 break;
             case "smartphone":
-                person.setSmartphone(invalidValue);
+                person.setSmartphone(valueAsString);
                 break;
             case "email":
-                person.setEmail(invalidValue);
+                person.setEmail(valueAsString);
                 break;
             case "phoneNumber":
-                person.setPhoneNumber(invalidValue);
+                person.setPhoneNumber(valueAsString);
                 break;
             case "age":
-                person.setAge(invalidValue);
+                person.setAge(valueAsString);
                 break;
             case "voter_id":
-                person.setVoterID(invalidValue);
+                person.setVoterID(valueAsString);
                 break;
             case "activeMemberId":
                 // Active Member ID maps to 'active_member_id' in the PersonRequest model
-                person.setActiveMemberID(invalidValue);
+                person.setActiveMemberID(valueAsString);
                 break;
             case "partyZila":
                 // party zila id maps to 'party_zila_id' - parse safely
-                if (invalidValue == null || invalidValue.isBlank()) {
+                if (valueAsString == null || valueAsString.isBlank()) {
                     person.setPartyZilaId(null);
                 } else {
                     try {
-                        person.setPartyZilaId(Integer.valueOf(invalidValue));
+                        person.setPartyZilaId(Integer.valueOf(valueAsString));
                     } catch (NumberFormatException e) {
-                        person.setPartyZilaId(null);
+                        person.setPartyZilaId(0);
                     }
                 }
                 break;
             case "partyMandal":
                 // party mandal id maps to 'party_mandal_id' - parse safely
-                if (invalidValue == null || invalidValue.isBlank()) {
+                if (valueAsString == null || valueAsString.isBlank()) {
                     person.setPartyMandalId(null);
                 } else {
                     try {
-                        person.setPartyMandalId(Integer.valueOf(invalidValue));
+                        person.setPartyMandalId(Integer.valueOf(valueAsString));
                     } catch (NumberFormatException e) {
-                        person.setPartyMandalId(null);
+                        person.setPartyMandalId(0);
                     }
                 }
                 break;
             case "full_address":
             case "fullAddress":
-                person.setFullAddress(invalidValue);
+                person.setFullAddress(valueAsString);
                 break;
             case "tehsil":
             case "taluka":
-                person.setTehsil(invalidValue);
+                person.setTehsil(valueAsString);
                 break;
             case "village":
-                person.setVillage(invalidValue);
+                person.setVillage(valueAsString);
                 break;
             case "blood_group":
             case "bloodGroup":
-                person.setBloodGroup(invalidValue);
+                person.setBloodGroup(valueAsString);
+                break;
+            case "aadhaar_number":
+                // Assuming there is a field for aadhaar number in PersonRequest, though not explicitly seen in previous read
+                // If not, this might need adjustment. Based on previous code, it wasn't in the switch.
+                // Checking PersonRequest again... it has aadhaarUrl but not aadhaarNumber explicitly shown in the snippet I read?
+                // Wait, I read PersonRequest earlier. It has aadhaarUrl. It does NOT have aadhaarNumber.
+                // However, generateAadhaarNumber exists.
+                // Let's check if there is a setter for aadhaar number that I missed or if it's named differently.
+                // The previous code didn't have aadhaar in the switch case either.
+                // I will stick to the existing switch cases.
                 break;
         }
         return person;

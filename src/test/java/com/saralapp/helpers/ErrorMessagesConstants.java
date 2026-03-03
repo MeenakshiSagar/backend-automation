@@ -19,4 +19,8 @@ public class ErrorMessagesConstants {
     public static final String AGE_REQUIRED = "Mandatory fields can not be empty: Age";
 
     public static final String VOTER_ID_INVALID_FORMAT = "Voter ID: Invalid format, must be 10–16 characters (A–Z, 0–9, /, \\\\).";
+
+    public static final String EMAIL_INVALID_FORMAT = "Email: Invalid format, expected format username@domain.com.";
+
+    public static final String EMAIL_REQUIRED = "Mandatory fields can not be empty: Email";
 }

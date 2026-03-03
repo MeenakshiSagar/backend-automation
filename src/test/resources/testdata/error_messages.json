@@ -19,6 +19,10 @@
       "invalidFormat": "{{PHONE_NUMBER_INVALID_FORMAT}}",
       "startingFrom2To4": "{{PHONE_NUMBER_INVALID_FORMAT}}"
     },
+    "email": {
+      "required": "{{EMAIL_REQUIRED}}",
+      "invalidFormat": "{{EMAIL_INVALID_FORMAT}}"
+    },
     "age": {
       "required": "Mandatory fields can not be empty: Age",
       "minValue": "{{AGE_INVALID_FORMAT}}",

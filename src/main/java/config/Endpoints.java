@@ -11,7 +11,7 @@ public class Endpoints {
     public static final String FORM_STRUCTURE = "/form-structure";
 
     //Person APIs
-    public static final String CREATE_PERSON = "/zila/api/data_entry/create";
+    public static final String CREATE_PERSON = "/zila/api/data_entry/verify_otp_and_create";
     public static final String GET_PERSON = "/zila/api/data_entry/get/{id}";
 
     // Upload APIs

@@ -1,5 +1,6 @@
 package com.saralapp.testdata;
 
+import com.saralapp.helpers.ErrorMessagesHelper;
 import enums.*;
 import models.person.PersonRequest;
 import org.testng.annotations.DataProvider;
@@ -52,7 +53,7 @@ public class PersonDataProvider {
                 {FakerDataGenerator.generatePhone(PhoneNumberTestDataType.EMPTY), "person.phone_number.required", "Empty phone number"},
                 {PhoneNumberTestDataType.MIN_LENGTH, "person.phone_number.minLength", "Too short phone number (<10 digits)"},
                 {PhoneNumberTestDataType.MAX_LENGTH, "person.phone_number.maxLength", "Too long phone number (>10 digits)"},
-                {PhoneNumberTestDataType.STARTING_FROM_2_TO_4, "person.phone_number.invalidFormat", "Phone number starting with 2-4 (invalid)"},
+                {PhoneNumberTestDataType.STARTING_FROM_2_TO_4, "person.phone_number.startingFrom2To4", "Phone number starting with 2-4 (invalid)"},
                 {PhoneNumberTestDataType.INTEGER_FORMAT, null, "Numeric phone number as integer"},
                 {PhoneNumberTestDataType.STRING_FORMAT, null, "Phone number provided as string"},
                 {PhoneNumberTestDataType.INVALID_FORMAT, "person.phone_number.invalidFormat", "Invalid phone number format (alpha chars)"},
@@ -64,10 +65,10 @@ public class PersonDataProvider {
     @DataProvider(name = "relationNameTestCases")
     public Object[][] relationNameTestCases() {
         return new Object[][]{
-                {FakerDataGenerator.generateName(NameTestDataType.EMPTY), "person.person_name.required", "Empty relation name"}, // Empty name
-                {FakerDataGenerator.generateName(NameTestDataType.MIN_LENGTH), "person.person_name.minLength", "Single-character relation name"}, // Single character
-                {FakerDataGenerator.generateName(NameTestDataType.MAX_LENGTH), "person.person_name.maxLength", "Relation name longer than max length (>50)"}, // More than 50 characters
-                {FakerDataGenerator.generateName(NameTestDataType.INVALID_FORMAT), "person.person_name.invalidFormat", "Relation name with invalid characters"}, // Invalid characters
+                {FakerDataGenerator.generateName(NameTestDataType.EMPTY), "person.person_relation_name.required", "Empty relation name"}, // Empty name
+                {FakerDataGenerator.generateName(NameTestDataType.MIN_LENGTH), "person.person_relation_name.minLength", "Single-character relation name"}, // Single character
+                {FakerDataGenerator.generateName(NameTestDataType.MAX_LENGTH), "person.person_relation_name.maxLength", "Relation name longer than max length (>50)"}, // More than 50 characters
+                {FakerDataGenerator.generateName(NameTestDataType.INVALID_FORMAT), "person.person_relation_name.invalidFormat", "Relation name with invalid characters"}, // Invalid characters
                 {FakerDataGenerator.generateName(NameTestDataType.VALID), null, "Valid relation name"}  // Valid name
         };
     }
@@ -90,15 +91,15 @@ public class PersonDataProvider {
     public Object[][] emailTestCases() {
         return new Object[][]{
                 {EmailTestDataType.EMPTY, "person.email.required", "Empty email"},
-                {EmailTestDataType.INVALID_FORMAT, "person.email.invalid", "Malformed email"},
-                {EmailTestDataType.MISSING_AT_SYMBOL, "person.email.invalid", "Missing '@' symbol"},
-                {EmailTestDataType.MISSING_DOMAIN, "person.email.invalid", "Missing domain"},
-                {EmailTestDataType.MISSING_USERNAME, "person.email.invalid", "Missing username"},
-                {EmailTestDataType.SPECIAL_CHARACTERS, "person.email.invalid", "Email with invalid special characters"},
-                {EmailTestDataType.MULTIPLE_AT_SYMBOLS, "person.email.invalid", "Multiple '@' symbols"},
-                {EmailTestDataType.TRAILING_DOT, "person.email.invalid", "Trailing dot in domain"},
-                {EmailTestDataType.LEADING_DOT, "person.email.invalid", "Leading dot in username"},
-                {EmailTestDataType.SPACE_IN_EMAIL, "person.email.invalid", "Space present in email"},
+                {EmailTestDataType.INVALID_FORMAT, "person.email.invalidFormat", "Malformed email"},
+                {EmailTestDataType.MISSING_AT_SYMBOL, "person.email.invalidFormat", "Missing '@' symbol"},
+                {EmailTestDataType.MISSING_DOMAIN, "person.email.invalidFormat", "Missing domain"},
+                {EmailTestDataType.MISSING_USERNAME, "person.email.invalidFormat", "Missing username"},
+                {EmailTestDataType.SPECIAL_CHARACTERS, "person.email.invalidFormat", "Email with invalid special characters"},
+                {EmailTestDataType.MULTIPLE_AT_SYMBOLS, "person.email.invalidFormat", "Multiple '@' symbols"},
+                {EmailTestDataType.TRAILING_DOT, "person.email.invalidFormat", "Trailing dot in domain"},
+                {EmailTestDataType.LEADING_DOT, "person.email.invalidFormat", "Leading dot in username"},
+                {EmailTestDataType.SPACE_IN_EMAIL, "person.email.invalidFormat", "Space present in email"},
                 {EmailTestDataType.UPPERCASE_EMAIL, null, "Uppercase email (allowed)"},
                 {EmailTestDataType.VALID, null, "Valid email"}
         };
@@ -157,14 +158,14 @@ public class PersonDataProvider {
     @DataProvider(name = "voterIDTestCases")
     public Object[][] voterIDTestCases() {
         return new Object[][]{
-                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.EMPTY), "voter_id.required", "Empty voter ID"},
-                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.NULL_VALUE), "voter_id.required", "Null voter ID"},
-                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.LESS_THAN_MIN), "voter_id.minLength", "Voter ID shorter than min"},
-                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.MORE_THAN_MAX), "voter_id.maxLength", "Voter ID longer than max"},
-                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.INVALID_SPECIAL_CHAR), "voter_id.invalidFormat", "Invalid special char in voter ID"},
-                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.SPACE_IN_INPUT), "voter_id.invalidFormat", "Space in voter ID"},
-                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.LEADING_TRAILING_SPACES), "voter_id.invalidFormat", "Leading/trailing spaces in voter ID"},
-                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.UNICODE_CHARACTERS), "voter_id.invalidFormat", "Unicode characters in voter ID"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.EMPTY), "person.voter_id.required", "Empty voter ID"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.NULL_VALUE), "person.voter_id.required", "Null voter ID"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.LESS_THAN_MIN), "person.voter_id.minLength", "Voter ID shorter than min"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.MORE_THAN_MAX), "person.voter_id.maxLength", "Voter ID longer than max"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.INVALID_SPECIAL_CHAR), "person.voter_id.invalidFormat", "Invalid special char in voter ID"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.SPACE_IN_INPUT), "person.voter_id.invalidFormat", "Space in voter ID"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.LEADING_TRAILING_SPACES), "person.voter_id.invalidFormat", "Leading/trailing spaces in voter ID"},
+                {FakerDataGenerator.generateVoterID(VoterIDTestDataType.UNICODE_CHARACTERS), "person.voter_id.invalidFormat", "Unicode characters in voter ID"},
                 {FakerDataGenerator.generateVoterID(VoterIDTestDataType.MIXED_CASE), null, "Mixed case voter ID (allowed)"},
                 {FakerDataGenerator.generateVoterID(VoterIDTestDataType.NUMERIC_ONLY), null, "Numeric-only voter ID (allowed)"},
                 {FakerDataGenerator.generateVoterID(VoterIDTestDataType.ALPHABET_ONLY), null, "Alphabet-only voter ID (allowed)"},
